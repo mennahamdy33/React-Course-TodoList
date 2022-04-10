@@ -55,8 +55,8 @@ onDoubleClick={(setEditing)=>{
 );
 }
 
-export function TodoItem({ value, onDelete,onCheck,onDoubleClick }){
-    
+export function TodoItem({ value, onDelete,onCheck,onDoubleClick,onSave }){
+    let [edited, setValue] = useState(value.title);
        
        const [editing,setEditing] = useState(false);
 
@@ -85,8 +85,13 @@ export function TodoItem({ value, onDelete,onCheck,onDoubleClick }){
 
     </li>
     <li style={editMode}>
-<input type="text"  />
-<button >Save</button>
+<input type="text" value={edited} />
+<button 
+onClick={()=>{
+    onSave(edited);
+    setValue("");
+}}
+>Save</button>
 </li>
     </>
 );
