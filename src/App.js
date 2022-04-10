@@ -25,7 +25,7 @@ onClick={()=>{
 );
 
 }
-export function TodoList({ items,onDelete,onCheck,onDoubleClick }){
+export function TodoList({ items,onDelete,onCheck,onDoubleClick, onSave }){
     return (
     
     
@@ -46,6 +46,9 @@ onDoubleClick={(setEditing)=>{
     onDoubleClick(setEditing);
 }
 }
+onSave ={(edited,setEditing)=>{
+    onSave(edited,setEditing,item);
+}}
 />
 
 
@@ -85,10 +88,17 @@ export function TodoItem({ value, onDelete,onCheck,onDoubleClick,onSave }){
 
     </li>
     <li style={editMode}>
-<input type="text" value={edited} />
+<input type="text" value={edited} 
+
+onChange={(e)=>{
+    setValue(e.target.value);
+}
+
+}
+/>
 <button 
 onClick={()=>{
-    onSave(edited);
+    onSave(edited,setEditing);
     setValue("");
 }}
 >Save</button>
@@ -139,6 +149,11 @@ return (<div>
         setEditing(true);
 
       }}
+      onSave ={(edited,setEditing,item) => {
+        setItems(items.map((todoItem)=>todoItem.id === item.id ? {... todoItem, title : edited}: todoItem));
+        setEditing(false);
+    }
+    }
 
 />
 </div>
